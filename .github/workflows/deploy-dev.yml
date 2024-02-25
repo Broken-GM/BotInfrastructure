@@ -26,7 +26,7 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.DEV_ACCOUNT_ID }}:role/Bot-Actions
           role-session-name: brokengmdevbot
           aws-region: us-west-2
-            - name: Deploy to AWS CloudFormation
+    - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: Bot
