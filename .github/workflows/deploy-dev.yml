@@ -18,8 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: Setup Sam
-        uses: aws-actions/setup-sam@v2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
