@@ -122,6 +122,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable SSH access via port 22
+      VpcId: !Ref BotVpc
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
