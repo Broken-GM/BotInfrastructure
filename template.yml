@@ -112,7 +112,7 @@ Resources:
       NetworkInterfaces:
         - AssociatePublicIpAddress: True
           DeleteOnTermination: True
-          SubnetId: !Ref BotPrivateRoute
+          SubnetId: !Ref BotPrivateSubnet
           DeviceIndex: 0
           GroupSet: 
             - !Ref BotInstanceSecurityGroup
