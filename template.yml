@@ -103,18 +103,13 @@ Resources:
   # EC2
   ############################
 
-  BotKeyPair:
-    Type: AWS::EC2::KeyPair
-    Properties:
-      KeyName: BotKey
-
   BotInstance:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t4g.nano
       SecurityGroupIds: 
         - !Ref BotInstanceSecurityGroup
-      KeyName: !Ref BotKeyPair
+      KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       SubnetId: !Ref BotPrivateSubnet
 
