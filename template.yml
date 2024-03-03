@@ -110,11 +110,7 @@ Resources:
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
-        - DeleteOnTermination: True
-          SubnetId: !Ref BotPublicSubnet
-          DeviceIndex: 0
-          GroupSet: 
-            - !Ref BotInstanceSecurityGroup
+        - !Ref BotNatGateway
 
   BotInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
