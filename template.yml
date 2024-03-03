@@ -110,8 +110,7 @@ Resources:
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
-        - DeleteOnTermination: True
-          NetworkInterfaceId: !Ref BotNatGateway
+        - NetworkInterfaceId: !Ref BotNatGateway
           DeviceIndex: 0
 
   BotInstanceSecurityGroup:
