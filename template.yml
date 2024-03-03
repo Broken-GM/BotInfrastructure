@@ -107,8 +107,6 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t4g.nano
-      SecurityGroupIds: 
-        - !Ref BotInstanceSecurityGroup
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
