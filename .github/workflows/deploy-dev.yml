@@ -29,6 +29,6 @@ jobs:
         with:
           name: Bot
           template: template.yml
-          no-fail-on-empty-changeset: "1"
-          disable-rollback: "1"
+          no-fail-on-empty-changeset: 1
+          disable-rollback: 1
           parameter-overrides: "VpcCidrBlock=10.0.0.0/21,PublicSubnetCidrBlock=10.0.0.0/22,PrivateSubnetCidrBlock=10.0.4.0/22,SshIpCidr=134.215.219.149/32"
