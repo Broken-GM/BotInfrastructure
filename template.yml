@@ -113,8 +113,6 @@ Resources:
         - DeleteOnTermination: True
           NetworkInterfaceId: !Ref BotNatGateway
           DeviceIndex: 0
-          GroupSet: 
-            - !Ref BotInstanceSecurityGroup
 
   BotInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
