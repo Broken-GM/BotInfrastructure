@@ -110,9 +110,9 @@ Resources:
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
-        - AssociatePublicIpAddress: True
+        - AssociateCarrierIpAddress: True
           DeleteOnTermination: True
-          SubnetId: !Ref BotPublicSubnet
+          SubnetId: !Ref BotPrivateSubnet
           DeviceIndex: 0
           GroupSet: 
             - !Ref BotInstanceSecurityGroup
