@@ -115,7 +115,7 @@ Resources:
     Type: AWS::EC2::EIPAssociation
     Properties:
       AllocationId: !GetAtt BotElasticIp.AllocationId
-      NetworkInterfaceId: !Ref
+      NetworkInterfaceId: !Ref BotNetworkInterface
       PrivateIpAddress: 10.0.4.10
 
   BotInstance:
