@@ -103,6 +103,15 @@ Resources:
   # EC2
   ############################
 
+  BotNetworkInterface:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      SourceDestCheck: 'false'
+      GroupSet:
+        - !Ref BotInstanceSecurityGroup
+      SubnetId: !Ref BotPublicRoute
+      PrivateIpAddress: 10.0.0.10
+
   BotInstance:
     Type: AWS::EC2::Instance
     Properties:
@@ -110,7 +119,7 @@ Resources:
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
-        - NetworkInterfaceId: !Ref BotNatGateway
+        - NetworkInterfaceId: !Ref BotNetworkInterface
           DeviceIndex: 0
 
   BotInstanceSecurityGroup:
