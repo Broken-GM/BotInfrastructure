@@ -109,7 +109,7 @@ Resources:
       SourceDestCheck: 'false'
       GroupSet:
         - !Ref BotInstanceSecurityGroup
-      SubnetId: !Ref BotPublicRoute
+      SubnetId: !Ref BotPublicSubnet
       PrivateIpAddress: 10.0.0.10
 
   BotInstance:
