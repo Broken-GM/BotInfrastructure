@@ -109,6 +109,7 @@ Resources:
       SourceDestCheck: 'false'
       GroupSet:
         - !Ref BotInstanceSecurityGroup
+        - !GetAtt BotVpc.DefaultSecurityGroup
       SubnetId: !Ref BotPrivateSubnet
       PrivateIpAddress: 10.0.4.10
 
