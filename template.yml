@@ -110,7 +110,7 @@ Resources:
       GroupSet:
         - !Ref BotInstanceSecurityGroup
       SubnetId: !Ref BotPrivateSubnet
-      PrivateIpAddress: 10.0.0.10
+      PrivateIpAddress: 10.0.4.10
 
   BotInstance:
     Type: AWS::EC2::Instance
