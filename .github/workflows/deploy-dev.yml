@@ -39,11 +39,11 @@ jobs:
       - name: Get Subnet ID
         id: get-subnet
         run: >-
-          echo "SubnetId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[1].OutputValue")" >> $GITHUB_OUTPUT
+          echo "SubnetId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[3].OutputValue")" >> $GITHUB_OUTPUT
       - name: Get Vpc ID
         id: get-vpc
         run: >-
-          echo "VpcId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[2].OutputValue")" >> $GITHUB_OUTPUT
+          echo "VpcId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[1].OutputValue")" >> $GITHUB_OUTPUT
       - name: Deploy to Cluster 1 CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
