@@ -24,7 +24,7 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.DEV_ACCOUNT_ID }}:role/Bot-Actions
           role-session-name: brokengmdevbot
           aws-region: us-west-2
-      - name: Deploy to AWS CloudFormation
+      - name: Deploy to VPC CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: BotVpc
@@ -32,3 +32,25 @@ jobs:
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
           parameter-overrides: "VpcCidrBlock=10.0.0.0/21,PublicSubnetCidrBlock=10.0.0.0/22,PrivateSubnetCidrBlock=10.0.4.0/22,SshIpCidr=${{ secrets.SSHCIDR }}"
+      - name: Get Private Ip Cidr
+        id: get-cidr
+        run: >-
+          echo "PrivateIpCidr=aws cloudformation \
+            --region us-west-2 describe-stacks \
+            --stack-name BotVpc \
+            --query "Stacks[0].Outputs[0].OutputValue" >> $GITHUB_OUTPUT
+      - name: Get Subnet ID
+        id: get-subnet
+        run: >-
+          echo "SubnetId=aws cloudformation \
+            --region us-west-2 describe-stacks \
+            --stack-name BotVpc \
+            --query "Stacks[0].Outputs[1].OutputValue" >> $GITHUB_OUTPUT
+      - name: Deploy to Cluster 1 CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: BotCluster1
+          template: cluster.yml
+          no-fail-on-empty-changeset: 1
+          disable-rollback: 1
+          parameter-overrides: "PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},KeyPair=Cluster1"
