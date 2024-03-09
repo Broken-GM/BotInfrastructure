@@ -5,6 +5,8 @@ Parameters:
     Type: String
   SshIpCidr:
     Type: String
+  KeyPair:
+    Type: String
 
 Resources:
 
@@ -28,7 +30,7 @@ Resources:
     Properties:
       ImageId: ami-0eb5115914ccc4bc2
       InstanceType: t2.micro
-      KeyName: Cluster1
+      KeyName: !Ref KeyPair
       SubnetId: !Ref PrivateSubnet
       SecurityGroupIds: 
         - !Ref SshSecurityGroup
