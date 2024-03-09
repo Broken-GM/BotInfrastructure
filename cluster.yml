@@ -3,12 +3,25 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   PrivateSubnet:
     Type: String
+  SshIpCidr:
+    Type: String
 
 Resources:
 
   ############################
   # Cluster Ec2
   ############################
+        
+  SshSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: !Ref SshIpCidr
         
   EC2Instance:
     Type: AWS::EC2::Instance
@@ -17,3 +30,5 @@ Resources:
       InstanceType: t2.micro
       KeyName: Cluster1
       SubnetId: !Ref PrivateSubnet
+      SecurityGroupIds: 
+        - !Ref SshSecurityGroup
