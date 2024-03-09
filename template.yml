@@ -103,22 +103,6 @@ Resources:
   # EC2
   ############################
 
-  BotNetworkInterface:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SourceDestCheck: 'false'
-      GroupSet:
-        - !Ref BotInstanceSecurityGroup
-      SubnetId: !Ref BotPrivateSubnet
-      PrivateIpAddress: 10.0.4.10
-
-  BotInstanceEIPAssociation:
-    Type: AWS::EC2::EIPAssociation
-    Properties:
-      AllocationId: !GetAtt BotElasticIp.AllocationId
-      NetworkInterfaceId: !Ref BotNetworkInterface
-      PrivateIpAddress: 10.0.4.10
-
   BotInstance:
     Type: AWS::EC2::Instance
     Properties:
@@ -126,8 +110,12 @@ Resources:
       KeyName: EC2 Keys
       ImageId: ami-0c79a55dda52434da
       NetworkInterfaces:
-        - NetworkInterfaceId: !Ref BotNetworkInterface
+        - AssociatePublicIpAddress: True
+          DeleteOnTermination: True
+          SubnetId: !Ref BotPrivateSubnet
           DeviceIndex: 0
+          GroupSet: 
+            - !Ref BotInstanceSecurityGroup
 
   BotInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
