@@ -101,6 +101,12 @@ Resources:
         - !Ref SshSecurityGroup
       
 Outputs:
+  PrivateIpCidr:
+    Description: EC2 Instance Private Ip in CIDR format
+    Value: !Join [ "/", [!GetAtt JumpEC2Instance.PrivateIp, "32"]]
+  SubnetId:
+    Description: Id of PublicSubnet
+    Value: !Ref PublicSubnet
   PublicIp:
     Description: EC2 Instance Public Ip
     Value: !GetAtt JumpEC2Instance.PublicIp
