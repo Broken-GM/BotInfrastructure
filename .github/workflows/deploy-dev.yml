@@ -27,8 +27,8 @@ jobs:
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: Bot
+          name: BotVpc
           template: template.yml
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
-          parameter-overrides: "VpcCidrBlock=10.0.0.0/21,PublicSubnetCidrBlock=10.0.0.0/22,PrivateSubnetCidrBlock=10.0.4.0/22,SshIpCidr=134.215.219.149/32"
+          parameter-overrides: "VpcCidrBlock=10.0.0.0/21,PublicSubnetCidrBlock=10.0.0.0/22,PrivateSubnetCidrBlock=10.0.4.0/22,SshIpCidr=${{ secrets.SSHCIDR }}"

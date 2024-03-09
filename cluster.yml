@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  PrivateSubnet:
+    Type: String
+
+Resources:
+
+  ############################
+  # Cluster Ec2
+  ############################
+        
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0eb5115914ccc4bc2
+      InstanceType: t2.micro
+      KeyName: Cluster1
+      SubnetId: !Ref PrivateSubnet
