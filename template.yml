@@ -1,0 +1,106 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  VpcCidrBlock:
+    Type: String
+  PublicSubnetCidrBlock:
+    Type: String
+  PrivateSubnetCidrBlock:
+    Type: String
+  SshIpCidr:
+    Type: String
+
+Resources:
+
+  ############################
+  # VPC
+  ############################
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidrBlock
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  ############################
+  # Public Subnet
+  ############################
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      CidrBlock: !Ref PublicSubnetCidrBlock
+      MapPublicIpOnLaunch: true
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  DefaultPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet
+
+  ############################
+  # Private Subnet
+  ############################
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnetCidrBlock
+      MapPublicIpOnLaunch: false
+
+  ############################
+  # Jump Ec2
+  ############################
+      
+  SshSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      VpcId: !Ref BotVpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: !Ref SshIpCidr
+        
+  JumpEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0c79a55dda52434da
+      InstanceType: t4g.nano
+      KeyName: JumpEc2
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds: 
+        - !Ref SshSecurityGroup
+      
+Outputs:
+  PublicIp:
+    Description: EC2 Instance Public Ip
+    Value: !GetAtt JumpEC2Instance.PublicIp
