@@ -107,6 +107,9 @@ Outputs:
   SubnetId:
     Description: Id of PublicSubnet
     Value: !Ref PublicSubnet
+  VpcId:
+    Description: Id of Vpc
+    Value: !Ref Vpc
   PublicIp:
     Description: EC2 Instance Public Ip
     Value: !GetAtt JumpEC2Instance.PublicIp

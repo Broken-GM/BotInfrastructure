@@ -40,6 +40,10 @@ jobs:
         id: get-subnet
         run: >-
           echo "SubnetId=aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[1].OutputValue"" >> $GITHUB_OUTPUT
+      - name: Get Vpc ID
+        id: get-vpc
+        run: >-
+          echo "VpcId=aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[2].OutputValue"" >> $GITHUB_OUTPUT
       - name: Deploy to Cluster 1 CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
@@ -47,4 +51,4 @@ jobs:
           template: cluster.yml
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
-          parameter-overrides: "PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},KeyPair=Cluster1"
+          parameter-overrides: "PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1"
