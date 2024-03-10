@@ -29,6 +29,13 @@ Resources:
         
   EC2Instance:
     Type: AWS::EC2::Instance
+    Metadata: 
+      AWS::CloudFormation::Init:
+        commands:
+          a-nvm:
+            command: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+            cwd: "~"
+            ignoreErrors: "true"
     Properties:
       ImageId: ami-0eb5115914ccc4bc2
       InstanceType: t2.micro
