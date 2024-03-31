@@ -1,2 +1,4 @@
 JumpEc2.pem
 Cluster1.pem
+.env
+node_modules
