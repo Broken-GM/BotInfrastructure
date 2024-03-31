@@ -1,4 +1,3 @@
-JumpEc2.pem
-Cluster1.pem
+keys/*
 .env
 node_modules
