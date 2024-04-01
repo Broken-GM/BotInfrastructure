@@ -39,6 +39,8 @@ Resources:
       UserData: 
         Fn::Base64: !Sub |
           #!/bin/bash
-          yum update -y
+          sudo -u ec2-user sh -c 'yum update -y'
           sudo -u ec2-user sh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
           sudo -u ec2-user sh -c '. ~/.nvm/nvm.sh && nvm install 20 && nvm use 20'
+          sudo -u ec2-user sh -c 'apt-get -y upgrade'
+          sudo -u ec2-user sh -c 'apt install -y ffmpeg'
