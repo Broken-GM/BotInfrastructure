@@ -42,3 +42,8 @@ Resources:
           wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
           echo 'export NVM_DIR="/home/ec2-user/.nvm"' >> /home/ec2-user/.bashrc
           echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> /home/ec2-user/.bashrc
+          . /home/ec2-user/.nvm/nvm.sh
+          . /home/ec2-user/.bashrc
+
+          nvm install 12
+          nvm use 20
