@@ -30,7 +30,7 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0eb5115914ccc4bc2
+      ImageId: ami-08116b9957a259459
       InstanceType: t2.micro
       KeyName: !Ref KeyPair
       SubnetId: !Ref PrivateSubnet
@@ -39,8 +39,8 @@ Resources:
       UserData: 
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo -u ec2-user sh -c 'sudo yum update -y'
+          sudo -u ec2-user sh -c 'sudo apt update -y'
           sudo -u ec2-user sh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
           sudo -u ec2-user sh -c '. ~/.nvm/nvm.sh && nvm install 20 && nvm use 20'
-          sudo -u ec2-user sh -c 'sudo yum -y upgrade'
-          sudo -u ec2-user sh -c 'sudo yum install -y ffmpeg'
+          sudo -u ec2-user sh -c 'sudo apt-get -y upgrade'
+          sudo -u ec2-user sh -c 'sudo apt install -y ffmpeg'
