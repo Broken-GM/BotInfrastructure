@@ -44,7 +44,7 @@ Resources:
           sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg'
           sudo -u ubuntu sh -c 'sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
           sudo -u ubuntu sh -c 'sudo chmod +x ~/.nvm/nvm.sh'
-          sudo -u ubuntu sh -c 'sudo ~/.nvm/nvm.sh && nvm install 20 && nvm use 20'
+          sudo -u ubuntu sh -c '. ~/.nvm/nvm.sh && nvm install 20 && nvm use 20'
           # sudo -u ubuntu sh -c 'sudo apt update -y'
           # sudo -u ubuntu sh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
           # sudo -u ubuntu sh -c 'sudo apt -y upgrade'
