@@ -43,7 +43,6 @@ Resources:
           sudo -u ubuntu sh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
           sudo -u ubuntu sh -c 'sudo apt -y upgrade'
           sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg'
-          sudo -u ubuntu sh -c 'export NVM_DIR="$([ -z "${!XDG_CONFIG_HOME-}" ] && printf %s "${!HOME}/.nvm" || printf %s "${!XDG_CONFIG_HOME}/nvm")"''
-          sudo -u ubuntu sh -c '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"''
+          sudo -u ubuntu sh -c 'source ~/.bashrc'
           sudo -u ubuntu sh -c 'nvm install 20'
           sudo -u ubuntu sh -c 'nvm use 20'
