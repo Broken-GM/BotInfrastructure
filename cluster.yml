@@ -44,5 +44,5 @@ Resources:
           sudo -u ubuntu sh -c 'sudo apt install -y curl'
           sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1'
           sudo -u ubuntu sh -c 'sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
-          sudo -u ubuntu sh -c 'sudo source ~/.bashrc'
+          sudo -u ubuntu sh -c 'source ~/.bashrc'
           sudo -u ubuntu sh -c 'sudo nvm -v'
