@@ -39,11 +39,10 @@ Resources:
       UserData: 
         Fn::Base64: !Sub |
           #!/bin/bash -ex
-          su ubuntu
-          apt update -y
-          apt upgrade -y
-          apt install -y curl
-          apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1
+          su ubuntu -c 'sudo apt update -y'
+          su ubuntu -c 'sudo apt upgrade -y'
+          su ubuntu -c 'sudo apt install -y curl'
+          su ubuntu -c 'sudo apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1'
           # sudo -u ubuntu sh -c 'sudo apt update -y'
           # sudo -u ubuntu sh -c 'sudo apt upgrade -y'
           # sudo -u ubuntu sh -c 'sudo apt install -y curl'
