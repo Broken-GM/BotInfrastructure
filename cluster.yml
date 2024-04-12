@@ -39,18 +39,16 @@ Resources:
       UserData: 
         Fn::Base64: !Sub |
           #!/bin/bash -ex
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          source ~/.bashrc
-          nvm install 20
-          nvm use 20
-          # sudo -u ubuntu sh -c 'sudo apt update -y'
-          # sudo -u ubuntu sh -c 'sudo apt upgrade -y'
-          # sudo -u ubuntu sh -c 'sudo apt install -y curl'
-          # sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1'
-          # sudo -u ubuntu sh -c 'sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
-          # sudo -u ubuntu sh -c 'echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc'
-          # sudo -u ubuntu sh -c 'echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"''
-          # sudo -u ubuntu sh -c 'nvm install 20'
-          # sudo -u ubuntu sh -c 'nvm use 20'
+          # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+          # export NVM_DIR="$HOME/.nvm"
+          # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          # source ~/.bashrc
+          # nvm install 20
+          # nvm use 20
+          sudo -u ubuntu sh -c 'sudo apt update -y'
+          sudo -u ubuntu sh -c 'sudo apt upgrade -y'
+          sudo -u ubuntu sh -c 'sudo apt install -y curl'
+          sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1'
+          sudo -u ubuntu sh -c 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -'
+          sudo -u ubuntu sh -c 'sudo apt install -y nodejs'
+          sudo -u ubuntu sh -c 'node --version'
