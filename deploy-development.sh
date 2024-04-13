@@ -1,2 +1,3 @@
 #!/bin/bash -ex
-echo "Hello World" >> test.txt
+cd ../../../../home/ubuntu/Bot/
+git pull origin development
