@@ -1,2 +1,2 @@
 #!/bin/bash -ex
-pwd
+echo "Hello World" >> test.txt
