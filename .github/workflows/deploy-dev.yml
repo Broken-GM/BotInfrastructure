@@ -59,4 +59,4 @@ jobs:
       - name: SSM Run Command
         id: ssm-run-command
         run: >-
-          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["./deploy-development.sh"]' --targets "Key=instanceids,Values=${{ steps.get-cluster-1.outputs.Id }}"
+          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["pwd"]' --targets "Key=instanceids,Values=${{ steps.get-cluster-1.outputs.Id }}"
