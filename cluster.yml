@@ -45,6 +45,6 @@ Resources:
           sudo -u ubuntu sh -c 'sudo apt install -y ffmpeg=7:4.4.2-0ubuntu0.22.04.1'
           sudo -u ubuntu sh -c 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -'
           sudo -u ubuntu sh -c 'sudo apt install -y nodejs'
-          sudo -u ubuntu sh -c 'npm install pm2 -g'
+          sudo -u ubuntu sh -c 'sudo npm install pm2 -g'
           sudo -u ubuntu sh -c 'git clone https://github.com/Broken-GM/Bot.git'
           sudo -u ubuntu sh -c 'pm2 start app/index.js'
