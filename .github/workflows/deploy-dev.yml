@@ -52,3 +52,11 @@ jobs:
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
           parameter-overrides: "PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1"
+      - name: Get Cluster ID
+        id: get-cluster-1
+        run: >-
+          echo "Id=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotCluster1 --query "Stacks[0].Outputs[0].OutputValue")" >> $GITHUB_OUTPUT
+      - name: SSM Run Command
+        id: ssm-run-command
+        run: >-
+          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["./deploy-development.sh"]' --targets "Key=instanceids,Values=${{ steps.get-cluster-1.outputs.Id }}"
