@@ -9,6 +9,10 @@ Parameters:
     Type: String
   KeyPair:
     Type: String
+  DiscordToken:
+    Type: String
+  DiscordClientId:
+    Type: String
 
 Resources:
 
@@ -47,6 +51,7 @@ Resources:
           sudo -u ubuntu sh -c 'sudo apt install -y nodejs'
           sudo -u ubuntu sh -c 'sudo npm install pm2 -g'
           sudo -u ubuntu sh -c 'sudo git clone https://github.com/Broken-GM/Bot.git ./home/ubuntu/Bot'
+          sudo -u ubuntu sh -c 'echo "module.exports = {apps : [{name: 'Broken GM Bot - Main',script: 'app/index.js',max_memory_restart: '256M',env: {DISCORD_TOKEN: '${DiscordToken}',DISCORD_CLIENT_ID: '${DiscordClientId}'}}]}" | tee ./home/ubuntu/Bot/ecosystem.config.js'
           sudo -u ubuntu sh -c 'sudo pm2 start ./home/ubuntu/Bot/app/index.js'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/deploy-development.sh'
 
