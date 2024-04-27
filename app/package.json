@@ -1,0 +1,14 @@
+{
+	"name": "broken-gm-bot",
+	"type": "module",
+	"version": "4.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+	},
+	"license": "MIT",
+	"dependencies": {
+		"discord.js": "^14.13.0",
+		"dotenv": "^16.0.2"
+	}
+}

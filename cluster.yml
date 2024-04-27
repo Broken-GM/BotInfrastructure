@@ -53,8 +53,9 @@ Resources:
           sudo -u ubuntu sh -c 'sudo git clone https://github.com/Broken-GM/Bot.git ./home/ubuntu/Bot'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/deploy-development.sh'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/generate-ecosystem.sh'
+          sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/start-app.sh'
           sudo -u ubuntu sh -c './home/ubuntu/Bot/generate-ecosystem.sh ${DiscordToken} ${DiscordClientId}'
-          sudo -u ubuntu sh -c 'sudo pm2 start ./home/ubuntu/Bot/app/index.js'
+          sudo -u ubuntu sh -c './home/ubuntu/Bot/start-app.sh'
 
 Outputs:
   InstanceId:
