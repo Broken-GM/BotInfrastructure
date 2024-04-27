@@ -56,6 +56,9 @@ jobs:
         id: get-cluster-1
         run: >-
           echo "Id=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotCluster1 --query "Stacks[0].Outputs[0].OutputValue")" >> $GITHUB_OUTPUT
+      - name: Run updateCommands.js
+        run: >-
+          node app/updateCommands.js ${{ secrets.DISCORDTOKEN }} ${{ secrets.DISCORDCLIENTID }}
       - name: SSM Run Command
         id: ssm-run-command
         run: >-
