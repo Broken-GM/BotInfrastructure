@@ -57,8 +57,9 @@ jobs:
         run: >-
           echo "Id=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotCluster1 --query "Stacks[0].Outputs[0].OutputValue")" >> $GITHUB_OUTPUT
       - name: Run NPM I
+        working-directory: app
         run: >-
-          npm ci
+          npm i
       - name: Run updateCommands.js
         run: >-
           node app/updateCommands.js ${{ secrets.DISCORDTOKEN }} ${{ secrets.DISCORDCLIENTID }}
