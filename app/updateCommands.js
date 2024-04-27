@@ -18,7 +18,6 @@ const main = async () => {
 	rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, DISCORD_GUILD_ID), { body: [] })
 	
 	const commands = await getCommands()
-	console.log(commands)
 	await updateCommands(rest, commands)
 }
 
