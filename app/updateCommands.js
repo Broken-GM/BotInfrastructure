@@ -8,8 +8,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
-console.log(process.argv)
-
 const DISCORD_TOKEN = process.argv[2]
 const DISCORD_CLIENT_ID = process.argv[3]
 const DISCORD_GUILD_ID = "610261968984604718"
@@ -20,6 +18,7 @@ const main = async () => {
 	rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, DISCORD_GUILD_ID), { body: [] })
 	
 	const commands = await getCommands()
+	console.log(commands)
 	await updateCommands(rest, commands)
 }
 
