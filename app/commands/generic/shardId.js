@@ -5,6 +5,6 @@ export default {
 		.setName('shard-id')
 		.setDescription('Sends the id of the shard'),
 	async execute(interaction) {
-		await interaction.reply({ content: `This shard has the id ${interaction.guild.shardID}`, ephemeral: true });
+		await interaction.reply({ content: `This shard has the id ${interaction.guild.shard.id}`, ephemeral: true });
 	},
 };
