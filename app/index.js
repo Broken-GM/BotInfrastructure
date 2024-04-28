@@ -2,12 +2,23 @@ import { ShardingManager } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config();
 
+function range(size, startAt = 0) {
+    return [...Array(size).keys()].map(i => i + startAt);
+}
+
+const numberOfShardsPerCluster = 10
+const totalShards = process.env.NUMBER_OF_CLUSTERS * numberOfShardsPerCluster
+const shardList = range(
+    numberOfShardsPerCluster, 
+    (process.env.CLUSTER_INDEX * numberOfShardsPerCluster) - numberOfShardsPerCluster
+)
+
 const manager = new ShardingManager('./bot.js', { 
     token: process.env.DISCORD_TOKEN, 
     mode: "worker",
     respawn: true,
-    totalShards: 10, 
-    shardList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+    totalShards, 
+    shardList
 });
 
 manager.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
