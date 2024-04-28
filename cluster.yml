@@ -14,7 +14,7 @@ Parameters:
   isDev:
     Type: String
   numberOfClusters:
-    type: Number
+    Type: Number
   DiscordToken:
     Type: String
   DiscordClientId:
