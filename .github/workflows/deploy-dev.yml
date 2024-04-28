@@ -11,6 +11,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      IS_DEV: "true"
+      NUMBER_OF_CLUSTERS: 1
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -51,7 +54,7 @@ jobs:
           template: cluster.yml
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
-          parameter-overrides: "PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1,DiscordToken=${{ secrets.DISCORDTOKEN }},DiscordClientId=${{ secrets.DISCORDCLIENTID }}"
+          parameter-overrides: "clusterIndex=1,PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1,isDev=${{ env.IS_DEV }},numberOfClusters=${{ NUMBER_OF_CLUSTERS }},DiscordToken=${{ secrets.DISCORDTOKEN }},DiscordClientId=${{ secrets.DISCORDCLIENTID }}"
       - name: Get Cluster ID
         id: get-cluster-1
         run: >-

@@ -1,6 +1,8 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
+  clusterIndex:
+    Type: Number
   PrivateSubnet:
     Type: String
   SshIpCidr:
@@ -9,6 +11,10 @@ Parameters:
     Type: String
   KeyPair:
     Type: String
+  isDev:
+    Type: String
+  numberOfClusters:
+    type: Number
   DiscordToken:
     Type: String
   DiscordClientId:
@@ -54,7 +60,7 @@ Resources:
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/deploy-development.sh'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/generate-ecosystem.sh'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/start-app.sh'
-          sudo -u ubuntu sh -c './home/ubuntu/Bot/generate-ecosystem.sh ${DiscordToken} ${DiscordClientId}'
+          sudo -u ubuntu sh -c './home/ubuntu/Bot/generate-ecosystem.sh ${DiscordToken} ${DiscordClientId} ${numberOfClusters} ${clusterIndex}'
           sudo -u ubuntu sh -c './home/ubuntu/Bot/start-app.sh'
 
 Outputs:
