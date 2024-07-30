@@ -28,7 +28,16 @@ export default {
 
 		await interaction.reply({
 			content: 'Choose your starter!',
-			components: [row],
+			components: [row], ephemeral: true
 		});
+
+		const collectorFilter = i => i.user.id === interaction.user.id;
+		try {
+			const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
+		
+			await confirmation.update({ content: `${confirmation.customId}`, components: [] });
+		} catch (e) {
+			await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+		}
 	},
 };
