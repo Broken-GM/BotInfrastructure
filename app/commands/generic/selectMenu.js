@@ -26,7 +26,7 @@ export default {
 		const row = new ActionRowBuilder()
 			.addComponents(select);
 
-		await interaction.reply({
+		response = await interaction.reply({
 			content: 'Choose your starter!',
 			components: [row], ephemeral: true
 		});
