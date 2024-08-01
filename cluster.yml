@@ -44,6 +44,7 @@ Resources:
       InstanceType: t2.micro
       KeyName: !Ref KeyPair
       SubnetId: !Ref PrivateSubnet
+      IamInstanceProfile: ClusterProfile
       SecurityGroupIds: 
         - !Ref SshSecurityGroup
       UserData: 

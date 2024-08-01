@@ -99,6 +99,34 @@ Resources:
       SubnetId: !Ref PublicSubnet
       SecurityGroupIds: 
         - !Ref SshSecurityGroup
+
+  ############################
+  # Cluster IAM
+  ############################
+
+  BotClusterRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: BotCluster
+      AssumeRolePolicyDocument:
+      Policies:
+        - PolicyName: DynamoAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:*
+                  - kms:*
+                Resource:
+                  - "*"
+
+  BotClusterIamProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: BotClusterProfile
+      Roles: 
+        - BotCluster
       
 Outputs:
   PrivateIpCidr:
