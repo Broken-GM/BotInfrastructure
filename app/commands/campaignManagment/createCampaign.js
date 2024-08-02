@@ -7,7 +7,7 @@ export default {
 		.setName('create-campaign')
 		.setDescription('Creates A campaign and associates it to this discord'),
 	async execute(interaction) {
-		const client = new DynamoDBClient({})
+		const client = new DynamoDBClient({ region: 'us-west-2' })
 
 		const getUserCommand = new GetCommand({
 			TableName: 'users',
