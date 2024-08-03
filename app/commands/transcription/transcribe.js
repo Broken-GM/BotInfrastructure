@@ -59,7 +59,7 @@ export default {
 		const row = new ActionRowBuilder()
 			.addComponents(select);
 
-		response = await interaction.reply({
+		const response = await interaction.reply({
 			content: 'Choose what campaign to transcribe for',
 			components: [row], ephemeral: true
 		});
