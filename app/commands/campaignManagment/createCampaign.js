@@ -18,6 +18,6 @@ export default {
 		})
 		const getUserResponse = await client.send(getUserCommand)
 
-		await interaction.reply({ content: `${JSON.parse(getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}")}`, ephemeral: true });
+		await interaction.reply({ content: `${getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}"}`, ephemeral: true });
 	},
 };
