@@ -28,6 +28,11 @@ export default {
 
 		const campaigns = []
 
+		if (campaignIds.length === 0) {
+			await interaction.reply({ content: `You do not have any campaigns`, ephemeral: true });
+			return
+		}
+
 		for (let i = 0; i < campaignIds.length; i += 1) {
 			const getCampaignCommand = new GetCommand({
 				TableName: 'campaigns',
@@ -46,9 +51,6 @@ export default {
 			})
 		}
 
-		console.log(campaigns)
-		console.log(campaignIds)
-
 		const select = new StringSelectMenuBuilder()
 			.setCustomId('campaigns')
 			.setPlaceholder('Select a campaign')
@@ -62,13 +64,14 @@ export default {
 			components: [row], ephemeral: true
 		});
 
-		// const collectorFilter = i => i.user.id === interaction.user.id;
-		// try {
-		// 	const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
+		const collectorFilter = i => i.user.id === interaction.user.id;
+		try {
+			const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
 		
-		// 	await confirmation.update({ content: `${confirmation.customId}`, components: [] });
-		// } catch (e) {
-		// 	await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
-		// }
+			await confirmation.update({ content: `${confirmation.customId}`, components: [] });
+		} catch (e) {
+			console.log(e)
+			await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+		}
 	},
 };
