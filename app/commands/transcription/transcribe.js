@@ -28,7 +28,7 @@ export default {
 
 		const campaigns = []
 
-		for (let i = 0; i < campaignIds.length - 1; i += 1) {
+		for (let i = 0; i < campaignIds.length; i += 1) {
 			const getCampaignCommand = new GetCommand({
 				TableName: 'campaigns',
 				Key: {
