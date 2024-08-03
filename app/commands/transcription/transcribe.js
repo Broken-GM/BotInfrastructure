@@ -46,6 +46,9 @@ export default {
 			})
 		}
 
+		console.log(campaigns)
+		console.log(campaignIds)
+
 		const select = new StringSelectMenuBuilder()
 			.setCustomId('campaigns')
 			.setPlaceholder('Select a campaign')
