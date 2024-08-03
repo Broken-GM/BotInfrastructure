@@ -12,9 +12,10 @@ export default {
 		const getUserCommand = new GetCommand({
 			TableName: 'users',
 			Key: {
-			  PK: `discord#${interaction.user.id}`
+				PK: 'user',
+			  	SK: `discord#${interaction.user.id}`
 			},
-		  })
+		})
 		const getUserResponse = await client.send(getUserCommand)
 
 		await interaction.reply({ content: `${JSON.parse(getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}")}`, ephemeral: true });
