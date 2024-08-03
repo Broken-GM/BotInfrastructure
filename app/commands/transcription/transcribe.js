@@ -39,10 +39,11 @@ export default {
 			const getCampaignResponse = await client.send(getCampaignCommand)
 			const campaignAttribute = JSON.parse(getCampaignResponse?.Item?.attributes ? getCampaignResponse?.Item?.attributes : "{}")
 			
-			campaigns.push(new StringSelectMenuOptionBuilder()
-				.setLabel(`${campaignAttribute?.displayName}`)
-				.setDescription(`The Campaign called ${campaignAttribute?.displayName}`)
-				.setValue(campaignAttribute?.id))
+			campaigns.push({
+				label: campaignAttribute?.displayName,
+				description: `The Campaign called ${campaignAttribute?.displayName}`,
+				value: campaignAttribute?.id,
+			})
 		}
 
 		const select = new StringSelectMenuBuilder()
