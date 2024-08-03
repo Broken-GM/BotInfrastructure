@@ -67,7 +67,9 @@ export default {
 		const collectorFilter = i => i.user.id === interaction.user.id;
 		try {
 			const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
-		
+			
+			console.log(confirmation)
+
 			await confirmation.update({ content: `${confirmation.customId}`, components: [] });
 		} catch (e) {
 			console.log(e)
