@@ -7,7 +7,6 @@ export default {
 		.setName('transcribe')
 		.setDescription('Transcribe a session'),
 	async execute(interaction) {
-		const campaignName = interaction.options.getString('name', true);
 		const client = new DynamoDBClient({ region: 'us-west-2' })
 
 		const getUserCommand = new GetCommand({
