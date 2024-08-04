@@ -88,7 +88,7 @@ export default {
 			},
 		})
 		const getSelectedCampaignResponse = await client.send(getSelectedCampaignCommand)
-		const selectedCampaignAttributes = JSON.parse(getSelectedCampaignResponse?.Item?.attributes ? getSelectedCampaignResponse?.Item?.attributes : `{"id":${campaignSelected}}`)
+		const selectedCampaignAttributes = JSON.parse(getSelectedCampaignResponse?.Item?.attributes ? getSelectedCampaignResponse?.Item?.attributes : `'{"id":"${campaignSelected}"}'`)
 
 		const sessionId = uuidv4()
 		const sessionCount = (selectedCampaignAttributes?.sessionCount ? selectedCampaignAttributes?.sessionCount : 0) + 1
