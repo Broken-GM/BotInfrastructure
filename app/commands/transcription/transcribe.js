@@ -62,7 +62,7 @@ export default {
 
 		const response = await interaction.reply({
 			content: 'Choose what campaign to transcribe for',
-			components: [row], ephemeral: true
+			components: [row]
 		});
 
 		const collectorFilter = i => i.user.id === interaction.user.id;
