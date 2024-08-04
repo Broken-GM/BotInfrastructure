@@ -71,6 +71,9 @@ export default {
 		} catch (e) {
 			console.log(e)
 			await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+			return
 		}
+
+		console.log("continued")
 	},
 };
