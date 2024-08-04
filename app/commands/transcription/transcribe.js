@@ -23,14 +23,14 @@ export default {
 		const campaignIds = JSON.parse(getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}")?.campaigns
 
 		if (!userId) {
-			await interaction.reply({ content: `You have not associated your discord account to your BrokenGM account`, ephemeral: true });
+			await interaction.reply({ content: `You have not associated your discord account to your BrokenGM account` });
 			return
 		}
 
 		const campaigns = []
 
 		if (campaignIds.length === 0) {
-			await interaction.reply({ content: `You do not have any campaigns`, ephemeral: true });
+			await interaction.reply({ content: `You do not have any campaigns` });
 			return
 		}
 
@@ -143,6 +143,6 @@ export default {
 		await client.send(addCampaignSessionCommand)
 		await client.send(updateCampaignCommand)
 
-		await interaction.reply({content: `Transcribing session ${sessionCount} for ${campaignName}`});
+		await interaction.editReply({ content: `Transcribing session ${sessionCount} for ${campaignName}`, components: [] })
 	},
 };
