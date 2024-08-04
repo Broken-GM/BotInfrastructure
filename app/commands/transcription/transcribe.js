@@ -92,6 +92,7 @@ export default {
 
 		const sessionId = uuidv4()
 		const sessionCount = (selectedCampaignAttributes?.sessionCount ? selectedCampaignAttributes?.sessionCount : 0) + 1
+		const sessions = selectedCampaignAttributes?.sessions?.length ? selectedCampaignAttributes?.sessions : []
 
 		const addSessionInput = {
 			TableName: 'transcripts',
@@ -116,7 +117,7 @@ export default {
 				type: 'campaign',
 				attributes: JSON.stringify({
 					...selectedCampaignAttributes,
-					sessions: [...selectedCampaignAttributes?.sessions, sessionId],
+					sessions,
 					sessionCount: sessionCount
 				}),
 			},
