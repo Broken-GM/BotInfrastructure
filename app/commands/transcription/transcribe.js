@@ -48,7 +48,7 @@ export default {
 			campaigns.push({
 				label: campaignAttribute?.displayName,
 				description: `The Campaign called ${campaignAttribute?.displayName}`,
-				value: { name: campaignAttribute?.displayName, id: campaignAttribute?.id },
+				value: JSON.stringify({ name: campaignAttribute?.displayName, id: campaignAttribute?.id }),
 			})
 		}
 
@@ -70,9 +70,10 @@ export default {
 		let campaignName
 		try {
 			const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
-			campaignSelected = confirmation?.values?.[0]?.id
-			campaignName = confirmation?.values?.[0]?.name
-			await confirmation.update({ content: `Selected ${confirmation?.values?.[0]?.name}`, components: [] });
+			const campaignObject = JSON.parse(confirmation?.values?.[0])
+			campaignSelected = campaignObject?.id
+			campaignName = campaignObject?.name
+			await confirmation.update({ content: `Selected ${campaignObject?.name}`, components: [] });
 		} catch (e) {
 			console.log(e)
 			await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
