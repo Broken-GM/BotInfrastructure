@@ -88,12 +88,26 @@ export default {
 			},
 		})
 		const getSelectedCampaignResponse = await client.send(getSelectedCampaignCommand)
-		const selectedCampaignAttributes = JSON.parse(getSelectedCampaignResponse?.Item?.attributes ? getSelectedCampaignResponse?.Item?.attributes : "{}")
+		const selectedCampaignAttributes = JSON.parse(getSelectedCampaignResponse?.Item?.attributes ? getSelectedCampaignResponse?.Item?.attributes : `{"id":${campaignSelected}}`)
 
 		const sessionId = uuidv4()
 		const sessionCount = (selectedCampaignAttributes?.sessionCount ? selectedCampaignAttributes?.sessionCount : 0) + 1
 		const sessions = selectedCampaignAttributes?.sessions?.length ? selectedCampaignAttributes?.sessions : []
 
+		const addCampaignSessionInput = {
+			TableName: 'transcripts',
+			Item: {
+				PK: `campaign#${campaignSelected}`,
+				SK: `session#${sessionId}`,
+				id: sessionId,
+				type: 'session',
+				attributes: JSON.stringify({
+					id: sessionId,
+					sessionNumber: sessionCount,
+					start: Date.now()
+				}),
+			},
+		}
 		const addSessionInput = {
 			TableName: 'transcripts',
 			Item: {
@@ -123,8 +137,10 @@ export default {
 			},
 		}
 		const addSessionCommand = new PutCommand(addSessionInput)
+		const addCampaignSessionCommand = new PutCommand(addCampaignSessionInput)
 		const updateCampaignCommand = new PutCommand(updateCampaignInput)
 		await client.send(addSessionCommand)
+		await client.send(addCampaignSessionCommand)
 		await client.send(updateCampaignCommand)
 
 		await interaction.reply({content: `Transcribing session ${sessionCount} for ${campaignName}`});
