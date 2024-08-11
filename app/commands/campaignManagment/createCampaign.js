@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { GetCommand, DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb'
-import { v4 as uuidv4 } from 'uuid';
+import fetch from 'node-fetch'
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -14,75 +13,31 @@ export default {
 				.setDescription('The name you want to give the campaign')),
 	async execute(interaction) {
 		const campaignName = interaction.options.getString('name', true);
-		const client = new DynamoDBClient({ region: 'us-west-2' })
+		const client = new SecretsManagerClient();
 
-		const getUserCommand = new GetCommand({
-			TableName: 'users',
-			Key: {
-				PK: 'user',
-			  	SK: `discord#${interaction.user.id}`
+        const secretResponse = await client.send(
+            new GetSecretValueCommand({
+                SecretId: process.env.BOT_SECRET_ARN,
+            }),
+        );
+		const parsedResponse = JSON.parse(secretResponse.SecretString)
+
+		const createCampaignResponse = await fetch(`https://api.${process.env.DOMAIN}/campaign/create/`, { 
+			method: 'POST', 
+			headers: {
+				'x-api-key': parsedResponse?.backendApi
 			},
+			body: {
+				discordId: interaction.user.id,
+				campaignName
+			}
 		})
-		const getUserResponse = await client.send(getUserCommand)
+		const createCampaignObject = createCampaignResponse.json()
 
-		const userId = JSON.parse(getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}")?.id
-		let userAttributes = JSON.parse(getUserResponse?.Item?.attributes ? getUserResponse?.Item?.attributes : "{}")
-
-		if (!userId) {
+		if (createCampaignObject?.message === 'userId/discordId does not exist or is invalid') {
 			await interaction.reply({ content: `You have not associated your discord account to your BrokenGM account`, ephemeral: true });
 			return
 		}
-
-		const campaignId = uuidv4()
-		userAttributes?.campaigns?.push(campaignId)
-
-		const addUserInput = {
-			TableName: 'users',
-			Item: {
-				PK: 'user',
-				SK: userId,
-				id: userId,
-				type: 'user',
-				attributes: JSON.stringify(userAttributes),
-			},
-		}
-		const addDiscordUserInput = {
-			TableName: 'users',
-			Item: {
-				PK: 'user',
-				SK: `discord#${interaction.user.id}`,
-				id: userId,
-				type: 'user',
-				attributes: JSON.stringify(userAttributes),
-			},
-		}
-
-		const addCampaignInput = {
-			TableName: 'campaigns',
-			Item: {
-				PK: 'campaign',
-				SK: campaignId,
-				id: campaignId,
-				type: 'campaign',
-				attributes: JSON.stringify({
-					owner: userId,
-					gms: [userId],
-					admins: [userId],
-					players: [],
-					discordServerId: interaction.guild.id,
-					transcriptIds: [],
-					id: campaignId,
-					displayName: campaignName
-				}),
-			},
-		}
-		const addCampaignCommand = new PutCommand(addCampaignInput)
-		const addDiscordUserCommand = new PutCommand(addDiscordUserInput)
-		const addUserCommand = new PutCommand(addUserInput)
-
-		await client.send(addCampaignCommand)
-		await client.send(addDiscordUserCommand)
-		await client.send(addUserCommand)
 
 		await interaction.reply({ content: `Created ${campaignName} campaign!`, ephemeral: true });
 	},

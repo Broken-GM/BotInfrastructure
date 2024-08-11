@@ -19,6 +19,10 @@ Parameters:
     Type: String
   DiscordClientId:
     Type: String
+  Domain:
+    Type: String
+  BotSecretsArn:
+    Type: String
 
 Resources:
 
@@ -62,7 +66,7 @@ Resources:
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/deploy-development.sh'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/generate-ecosystem.sh'
           sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/start-app.sh'
-          sudo -u ubuntu sh -c './home/ubuntu/Bot/generate-ecosystem.sh ${DiscordToken} ${DiscordClientId} ${numberOfClusters} ${clusterIndex}'
+          sudo -u ubuntu sh -c './home/ubuntu/Bot/generate-ecosystem.sh ${DiscordToken} ${DiscordClientId} ${numberOfClusters} ${clusterIndex} ${Domain} ${BotSecretsArn}'
           sudo -u ubuntu sh -c './home/ubuntu/Bot/start-app.sh'
 
 Outputs:
