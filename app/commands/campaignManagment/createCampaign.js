@@ -13,7 +13,7 @@ export default {
 				.setDescription('The name you want to give the campaign')),
 	async execute(interaction) {
 		const campaignName = interaction.options.getString('name', true);
-		const client = new SecretsManagerClient();
+		const client = new SecretsManagerClient({ region: 'us-west-2' });
 
         const secretResponse = await client.send(
             new GetSecretValueCommand({
