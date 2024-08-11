@@ -27,10 +27,10 @@ export default {
 			headers: {
 				'x-api-key': parsedResponse?.backendApi
 			},
-			body: {
+			body: JSON.stringify({
 				discordId: interaction.user.id,
 				campaignName
-			}
+			})
 		})
 		const createCampaignObject = createCampaignResponse.json()
 
