@@ -34,7 +34,7 @@ export default {
 		})
 		const createCampaignObject = createCampaignResponse.json()
 
-		if (createCampaignObject?.message === 'userId/discordId does not exist or is invalid') {
+		if (createCampaignObject?.body?.message === 'userId/discordId does not exist or is invalid') {
 			await interaction.reply({ content: `You have not associated your discord account to your BrokenGM account`, ephemeral: true });
 			return
 		}
