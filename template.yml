@@ -126,6 +126,7 @@ Resources:
                 Action:
                   - dynamodb:*
                   - kms:*
+                  - secretsmanager:GetSecretValue
                 Resource:
                   - "*"
 
