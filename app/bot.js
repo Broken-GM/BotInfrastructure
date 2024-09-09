@@ -3,13 +3,22 @@ import path from 'node:path';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv'
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
+const client = new SecretsManagerClient({ region: 'us-west-2' });
+const secretResponse = await client.send(
+	new GetSecretValueCommand({
+		SecretId: process.env.BOT_SECRET_ARN,
+	}),
+);
+const parsedResponse = JSON.parse(secretResponse.SecretString)
+
 const main = async () => {
-	const DISCORD_TOKEN = process.env.DISCORD_TOKEN
+	const DISCORD_TOKEN = parsedResponse?.token
 	
 	const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 	client.commands = new Collection();

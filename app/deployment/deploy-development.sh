@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-cd ../../../../home/ubuntu/Bot/
+cd ../../
 git pull origin development
 cd app
 sudo npm i

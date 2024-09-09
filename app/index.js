@@ -1,6 +1,15 @@
 import { ShardingManager } from 'discord.js'
 import dotenv from 'dotenv'
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 dotenv.config();
+
+const client = new SecretsManagerClient({ region: 'us-west-2' });
+const secretResponse = await client.send(
+	new GetSecretValueCommand({
+		SecretId: process.env.BOT_SECRET_ARN,
+	}),
+);
+const parsedResponse = JSON.parse(secretResponse.SecretString)
 
 function range(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
@@ -14,7 +23,7 @@ const shardList = range(
 )
 
 const manager = new ShardingManager('./bot.js', { 
-    token: process.env.DISCORD_TOKEN, 
+    token: parsedResponse?.token, 
     mode: "worker",
     respawn: true,
     totalShards, 
