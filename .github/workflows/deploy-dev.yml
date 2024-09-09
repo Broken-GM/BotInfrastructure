@@ -56,10 +56,10 @@ jobs:
           no-fail-on-empty-changeset: 1
           disable-rollback: 1
           parameter-overrides: "clusterIndex=1,PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1,isDev=${{ env.IS_DEV }},numberOfClusters=${{ env.NUMBER_OF_CLUSTERS }},DiscordToken=${{ secrets.DISCORDTOKEN }},DiscordClientId=${{ secrets.DISCORDCLIENTID }},Domain=${{ secrets.DEVDOMAIN }},BotSecretsArn=${{ secrets.DEVBOTSECRETSARN }}"
-      # - name: Get Cluster ID
-      #   id: get-cluster-1
-      #   run: >-
-      #     echo "Id=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotCluster1 --query "Stacks[0].Outputs[0].OutputValue")" >> $GITHUB_OUTPUT
+      - name: SSM Run Command
+        id: ssm-run-command
+        run: >-
+          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["pwd"]' --targets "Key=tag:cluster,Values=ec2"
       # - name: Run NPM I
       #   working-directory: app
       #   run: >-
@@ -67,7 +67,3 @@ jobs:
       # - name: Run updateCommands.js
       #   run: >-
       #     node app/updateCommands.js ${{ secrets.DISCORDTOKEN }} ${{ secrets.DISCORDCLIENTID }}
-      # - name: SSM Run Command
-      #   id: ssm-run-command
-      #   run: >-
-      #     aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["../../../../home/ubuntu/Bot/deploy-development.sh"]' --targets "Key=instanceids,Values=${{ steps.get-cluster-1.outputs.Id }}"

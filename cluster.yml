@@ -44,6 +44,9 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
+      Tags:
+        - Key: cluster
+          Value: ec2
       ImageId: ami-08116b9957a259459
       InstanceType: t2.micro
       KeyName: !Ref KeyPair
