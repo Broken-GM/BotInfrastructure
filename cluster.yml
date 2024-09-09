@@ -63,6 +63,7 @@ Resources:
             sudo -u ubuntu sh -c 'echo "{\n\"clusterIndex\": \"${clusterIndex}\",\n\"numberOfClusters\": \"${numberOfClusters}\",\n\"domain\": \"${Domain}\",\n\"botSecretsArn\": \"${BotSecretsArn}\"\n}" >> ./home/ubuntu/metaData.txt'
             sudo -u ubuntu sh -c 'sudo git clone https://github.com/Broken-GM/Bot.git ./home/ubuntu/Bot'
             sudo -u ubuntu sh -c 'git config --global --add safe.directory ./home/ubuntu/Bot'
+            sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/deployment/initial-install.sh'
             sudo -u ubuntu sh -c 'touch ./home/ubuntu/ranUserData.txt'
           fi
 
