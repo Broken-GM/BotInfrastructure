@@ -55,7 +55,7 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -ex
           sudo -u ubuntu sh -c 'sudo touch ./home/ubuntu/metaData.txt'
-          sudo -u ubuntu sh -c 'sudo truncate -s 0'
+          sudo -u ubuntu sh -c 'sudo truncate -s 0 ./home/ubuntu/metaData.txt'
           sudo -u ubuntu sh -c 'sudo echo \'test\' >> ./home/ubuntu/metaData.txt'
 
 Outputs:
