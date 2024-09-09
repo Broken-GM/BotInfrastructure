@@ -3,6 +3,7 @@ import path from 'node:path';
 import { Events } from 'discord.js';
 import { Player } from 'discord-player';
 import { fileURLToPath } from 'url';
+import { YoutubeiExtractor } from "discord-player-youtubei"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +14,7 @@ export default {
 	async execute(client) {
 		const player = new Player(client);
 		await player.extractors.loadDefault();
+		player.extractors.register(YoutubeiExtractor, {})
 
 		client.player = player;
 
