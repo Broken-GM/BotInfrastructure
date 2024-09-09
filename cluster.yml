@@ -56,7 +56,7 @@ Resources:
           #!/bin/bash -ex
           sudo -u ubuntu sh -c 'touch ./home/ubuntu/metaData.txt'
           sudo -u ubuntu sh -c 'truncate -s 0 ./home/ubuntu/metaData.txt'
-          sudo -u ubuntu sh -c 'echo -e "{clusterIndex}\n{numberOfClusters}\n{Domain}\n{BotSecretsArn}" >> ./home/ubuntu/metaData.txt'
+          sudo -u ubuntu sh -c 'echo "{\n\"clusterIndex\": \"${clusterIndex}\",\n\"numberOfClusters\": \"${numberOfClusters}\",\n\"domain\": \"${Domain}\",\n\"botSecretsArn\": \"${BotSecretsArn}\"\n}" >> ./home/ubuntu/metaData.txt'
 
 Outputs:
   InstanceId:
