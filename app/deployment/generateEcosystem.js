@@ -2,7 +2,7 @@ import fs from "fs"
 
 const main = async () => {
     const metaData = JSON.parse(fs.readFileSync('../../metaData.txt', 'utf8'))
-    unlink(`../ecosystem.config.cjs`)
+    fs.unlink(`../ecosystem.config.cjs`)
     fs.appendFileSync(`../ecosystem.config.cjs`, `module.exports = {
         apps : [
             {

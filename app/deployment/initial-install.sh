@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-if [ ! -f ./checks/ranInitialInstall.txt ]; then
+if [ ! -f ./ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'sudo apt update -y'
     sudo -u ubuntu sh -c 'sudo apt upgrade -y'
     sudo -u ubuntu sh -c 'sudo apt install -y curl'
@@ -10,7 +10,6 @@ if [ ! -f ./checks/ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'sudo chmod +x ./deploy-development.sh'
     sudo -u ubuntu sh -c 'sudo chmod +x ./generate-ecosystem.sh'
     sudo -u ubuntu sh -c 'sudo chmod +x ./start-app.sh'
-    sudo -u ubuntu sh -c 'mkdir ./checks'
     sudo -u ubuntu sh -c 'sudo ./start-app.sh'
-    sudo -u ubuntu sh -c 'touch ./checks/ranInitialInstall.txt'
+    sudo -u ubuntu sh -c 'touch ./ranInitialInstall.txt'
 fi
