@@ -1,9 +1,8 @@
 import fs from "fs"
 
 const main = async () => {
-    const metaData = JSON.parse(fs.readFileSync('../../metaData.txt', 'utf8'))
-    fs.unlinkSync(`../ecosystem.config.cjs`)
-    fs.appendFileSync(`../ecosystem.config.cjs`, `module.exports = {
+    const metaData = JSON.parse(fs.readFileSync('../metaData.txt', 'utf8'))
+    fs.writeFileSync(`./ecosystem.config.cjs`, `module.exports = {
         apps : [
             {
                 name: 'Broken GM',
