@@ -11,8 +11,6 @@ const secretResponse = await client.send(
 );
 const parsedResponse = JSON.parse(secretResponse.SecretString)
 
-console.log(parsedResponse)
-
 function range(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
 }
