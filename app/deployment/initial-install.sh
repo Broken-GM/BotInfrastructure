@@ -11,5 +11,5 @@ if [ ! -f ./ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'sudo chmod +x ./generate-ecosystem.sh'
     sudo -u ubuntu sh -c 'sudo chmod +x ./start-app.sh'
     sudo -u ubuntu sh -c 'sudo ./start-app.sh'
-    sudo -u ubuntu sh -c 'touch ./ranInitialInstall.txt'
+    sudo -u ubuntu sh -c 'sudo touch ./ranInitialInstall.txt'
 fi
