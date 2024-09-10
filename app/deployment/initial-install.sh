@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-if [ ! -f ./home/ubuntu/Bot/deployment/checks/ranInitialInstall.txt ]; then
+if [ ! -f ./checks/ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'sudo apt update -y'
     sudo -u ubuntu sh -c 'sudo apt upgrade -y'
     sudo -u ubuntu sh -c 'sudo apt install -y curl'
@@ -7,10 +7,10 @@ if [ ! -f ./home/ubuntu/Bot/deployment/checks/ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -'
     sudo -u ubuntu sh -c 'sudo apt install -y nodejs'
     sudo -u ubuntu sh -c 'sudo npm install pm2 -g'
-    sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/app/deployment/deploy-development.sh'
-    sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/app/deployment/generate-ecosystem.sh'
-    sudo -u ubuntu sh -c 'sudo chmod +x ./home/ubuntu/Bot/app/deployment/start-app.sh'
-    sudo -u ubuntu sh -c 'sudo mkdir ./home/ubuntu/Bot/app/deployment/checks'
-    sudo -u ubuntu sh -c 'sudo ./home/ubuntu/Bot/app/deployment/start-app.sh'
-    sudo -u ubuntu sh -c 'touch ./home/ubuntu/Bot/app/deployment/checks/ranInitialInstall.txt'
+    sudo -u ubuntu sh -c 'sudo chmod +x ./deploy-development.sh'
+    sudo -u ubuntu sh -c 'sudo chmod +x ./generate-ecosystem.sh'
+    sudo -u ubuntu sh -c 'sudo chmod +x ./start-app.sh'
+    sudo -u ubuntu sh -c 'sudo mkdir ./checks'
+    sudo -u ubuntu sh -c 'sudo ./start-app.sh'
+    sudo -u ubuntu sh -c 'touch ./checks/ranInitialInstall.txt'
 fi
