@@ -59,7 +59,7 @@ jobs:
       - name: SSM Run Command
         id: ssm-run-command
         run: >-
-          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["cd ../../../../home/ubuntu/Bot/app/deployment&&./initial-install.sh"]' --targets "Key=tag:cluster,Values=ec2"
+          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["cd ../../../../home/ubuntu/Bot/app/deployment&&sudo ./initial-install.sh"]' --targets "Key=tag:cluster,Values=ec2"
       # - name: Run NPM I
       #   working-directory: app
       #   run: >-
