@@ -2,9 +2,9 @@ import fsExtra from 'fs-extra'
 import fs from "fs"
 
 const main = async () => {
-    const metaData = JSON.parse(fs.readFileSync('file', 'utf8'))
+    const metaData = JSON.parse(fs.readFileSync('../../metaData.txt', 'utf8'))
     await fsExtra.emptyDir(`${parentDir}/${folders[i]}`)
-    fs.appendFileSync(`..`, `module.exports = {
+    fs.appendFileSync(`../ecosystem.config.cjs`, `module.exports = {
         apps : [
             {
                 name: 'Broken GM',

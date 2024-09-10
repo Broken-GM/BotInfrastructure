@@ -10,7 +10,7 @@ if [ ! -f ./checks/ranInitialInstall.txt ]; then
     sudo -u ubuntu sh -c 'sudo chmod +x ./deploy-development.sh'
     sudo -u ubuntu sh -c 'sudo chmod +x ./generate-ecosystem.sh'
     sudo -u ubuntu sh -c 'sudo chmod +x ./start-app.sh'
-    sudo -u ubuntu sh -c 'sudo mkdir ./checks'
+    sudo -u ubuntu sh -c 'mkdir ./checks'
     sudo -u ubuntu sh -c 'sudo ./start-app.sh'
     sudo -u ubuntu sh -c 'touch ./checks/ranInitialInstall.txt'
 fi
