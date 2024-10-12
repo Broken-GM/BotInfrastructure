@@ -27,6 +27,9 @@ jobs:
       - name: Install Dependencies
         working-directory: ./cdk
         run: npm ci
+      - name: CDK Bootstrap
+        working-directory: ./cdk
+        run: npx cdk bootstrap
       - name: Deploy CDK
         working-directory: ./cdk
         run: npx cdk deploy --all --require-approval never
