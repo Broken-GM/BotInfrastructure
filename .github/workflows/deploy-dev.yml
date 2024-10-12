@@ -11,9 +11,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      IS_DEV: "true"
-      NUMBER_OF_CLUSTERS: 1
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -27,47 +24,9 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.DEV_ACCOUNT_ID }}:role/Bot-Actions
           role-session-name: brokengmdevbot
           aws-region: us-west-2
-      - name: Deploy to VPC CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: BotVpc
-          template: template.yml
-          no-fail-on-empty-changeset: 1
-          disable-rollback: 1
-          capabilities: CAPABILITY_NAMED_IAM
-          parameter-overrides: "VpcCidrBlock=10.0.0.0/21,PublicSubnetCidrBlock=10.0.0.0/22,PrivateSubnetCidrBlock=10.0.4.0/22,SshIpCidr=${{ secrets.SSHCIDR }}"
-      - name: Get Private Ip Cidr
-        id: get-cidr
-        run: >-
-          echo "PrivateIpCidr=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[0].OutputValue")" >> $GITHUB_OUTPUT
-      - name: Get Subnet ID
-        id: get-subnet
-        run: >-
-          echo "SubnetId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[3].OutputValue")" >> $GITHUB_OUTPUT
-      - name: Get Vpc ID
-        id: get-vpc
-        run: >-
-          echo "VpcId=$(aws cloudformation --region us-west-2 describe-stacks --stack-name BotVpc --query "Stacks[0].Outputs[1].OutputValue")" >> $GITHUB_OUTPUT
-      - name: Deploy to Cluster 1 CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: BotCluster1
-          template: cluster.yml
-          no-fail-on-empty-changeset: 1
-          disable-rollback: 1
-          parameter-overrides: "clusterIndex=1,PrivateSubnet=${{ steps.get-subnet.outputs.SubnetId }},SshIpCidr=${{ steps.get-cidr.outputs.PrivateIpCidr }},VpcId=${{ steps.get-vpc.outputs.VpcId }},KeyPair=Cluster1,isDev=${{ env.IS_DEV }},numberOfClusters=${{ env.NUMBER_OF_CLUSTERS }},DiscordToken=${{ secrets.DISCORDTOKEN }},DiscordClientId=${{ secrets.DISCORDCLIENTID }},Domain=${{ secrets.DEVDOMAIN }},BotSecretsArn=${{ secrets.DEVBOTSECRETSARN }}"
-      - name: SSM Run Command Initial Install
-        id: ssm-run-command-initial-install
-        run: >-
-          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["cd ../../../../home/ubuntu/Bot/app/deployment&&sudo sh ./initial-install.sh"]' --targets "Key=tag:cluster,Values=ec2"
-      - name: SSM Run Command Deploy
-        id: ssm-run-command-deploy
-        run: >-
-          aws ssm send-command --document-name "AWS-RunShellScript" --parameters 'commands=["cd ../../../../home/ubuntu/Bot/app/deployment&&sudo sh ./deploy-development.sh"]' --targets "Key=tag:cluster,Values=ec2"
-      # - name: Run NPM I
-      #   working-directory: app
-      #   run: >-
-      #     npm i
-      # - name: Run updateCommands.js
-      #   run: >-
-      #     node app/updateCommands.js ${{ secrets.DISCORDTOKEN }} ${{ secrets.DISCORDCLIENTID }}
+      - name: Install Dependencies
+        working-directory: ./cdk
+        run: npm ci
+      - name: Deploy CDK
+        working-directory: ./cdk
+        run: cdk deploy --all --require-approval never
