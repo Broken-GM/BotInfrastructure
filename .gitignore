@@ -1,3 +1,9 @@
 keys/*
 .env
 node_modules
+
+cdk/*.js
+cdk/!jest.config.js
+cdk/*.d.ts
+cdk/.cdk.staging
+cdk/cdk.out
