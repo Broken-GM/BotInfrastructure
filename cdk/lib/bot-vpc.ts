@@ -1,11 +1,10 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as ecr from 'aws-cdk-lib/aws-ecr';
-import * as iam from 'aws-cdk-lib/aws-iam';
 
 export class VpcStack extends cdk.Stack {
+    public readonly privateSubnet: ec2.Subnet;
+
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
@@ -47,7 +46,7 @@ export class VpcStack extends cdk.Stack {
         });
 
         // Create Private Subnet
-        const privateSubnet = new ec2.PrivateSubnet(this, 'main-broken-gm-bot-vpc-private-subnet', {
+        this.privateSubnet = new ec2.PrivateSubnet(this, 'main-broken-gm-bot-vpc-private-subnet', {
             vpcId: vpc.vpcId,
             availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: '10.0.4.0/22',
