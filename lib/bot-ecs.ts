@@ -8,6 +8,7 @@ interface EcsTaskStackProps extends cdk.StackProps {
     ecrRepoName: string;
     vpc: ec2.IVpc;
     subnet: ec2.ISubnet;
+    securityGroup: ec2.ISecurityGroup;
 }
 
 export class EcsStack extends cdk.Stack {
@@ -22,13 +23,10 @@ export class EcsStack extends cdk.Stack {
         );
 
         // Create ECS Cluster
-        const cluster = new ecs.Cluster(this, 'main-broken-gm-bot-ecs-cluster', {
-            vpc: props.vpc
-        });
+        const cluster = new ecs.Cluster(this, 'main-broken-gm-bot-ecs-cluster', {});
         cluster.addCapacity('main-broken-gm-bot-ecs-scaling-group', {
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
             desiredCapacity: 1,
-            vpcSubnets: { subnets: [props.subnet] }
         });
 
         // Create ECS Task
