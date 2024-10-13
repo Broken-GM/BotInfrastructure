@@ -8,7 +8,6 @@ interface EcsTaskStackProps extends cdk.StackProps {
     ecrRepoName: string;
     vpc: ec2.IVpc;
     subnet: ec2.ISubnet;
-    securityGroup: ec2.ISecurityGroup;
 }
 
 export class EcsStack extends cdk.Stack {

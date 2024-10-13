@@ -5,7 +5,6 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 export class VpcStack extends cdk.Stack {
     public readonly privateSubnet: ec2.Subnet;
     public readonly vpc: ec2.Vpc;
-    public readonly securityGroup: ec2.SecurityGroup;
 
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
@@ -16,11 +15,6 @@ export class VpcStack extends cdk.Stack {
             maxAzs: 1,
             natGateways: 0,
             subnetConfiguration: [],
-        });
-
-        // Add Security Group
-        this.securityGroup = new ec2.SecurityGroup(this, 'main-broken-gm-bot-vpc-security-group', {
-            vpc: vpc,
         });
 
         // Create and Attach Internet Gateway
