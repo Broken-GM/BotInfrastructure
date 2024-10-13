@@ -8,6 +8,7 @@ export class VpcStack extends cdk.Stack {
 
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
+        const stack = cdk.Stack.of(this);
 
         // Create VPC
         const vpc = new ec2.Vpc(this, 'main-broken-gm-bot-vpc', {
@@ -16,7 +17,8 @@ export class VpcStack extends cdk.Stack {
             natGateways: 0,
             subnetConfiguration: [],
         });
-        this.vpcId = vpc.vpcId
+        this.vpcId = stack.resolve(vpc.vpcId)
+        console.log('vpcId: ' + this.vpcId)
 
         // Create and Attach Internet Gateway
         const internetGateway = new ec2.CfnInternetGateway(this, 'main-broken-gm-bot-vpc-ig');
@@ -54,6 +56,6 @@ export class VpcStack extends cdk.Stack {
             cidrBlock: '10.0.4.0/22',
             mapPublicIpOnLaunch: false,
         });
-        this.privateSubnetId = privateSubnet.subnetId
+        this.privateSubnetId = stack.resolve(privateSubnet.subnetId)
     }
 }
