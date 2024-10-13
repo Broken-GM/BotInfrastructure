@@ -21,15 +21,12 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.DEV_ACCOUNT_ID }}:role/Bot-Actions
+          role-to-assume: arn:aws:iam::${{ secrets.DEV_ACCOUNT_ID }}:role/Bot-Infrastructure-Actions
           role-session-name: brokengmdevbot
           aws-region: us-west-2
       - name: Install Dependencies
-        working-directory: ./cdk
         run: npm ci
       - name: CDK Bootstrap
-        working-directory: ./cdk
         run: npx cdk bootstrap
       - name: Deploy CDK
-        working-directory: ./cdk
         run: npx cdk deploy --all --require-approval never
