@@ -3,12 +3,11 @@ import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 export class VpcStack extends cdk.Stack {
-    public readonly privateSubnetId: string;
-    public readonly vpcId: string;
+    public readonly privateSubnet: ec2.Subnet;
+    public readonly vpc: ec2.Vpc;
 
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
-        const stack = cdk.Stack.of(this);
 
         // Create VPC
         const vpc = new ec2.Vpc(this, 'main-broken-gm-bot-vpc', {
@@ -17,8 +16,6 @@ export class VpcStack extends cdk.Stack {
             natGateways: 0,
             subnetConfiguration: [],
         });
-        this.vpcId = stack.resolve(vpc.vpcId)
-        console.log('vpcId: ' + this.vpcId)
 
         // Create and Attach Internet Gateway
         const internetGateway = new ec2.CfnInternetGateway(this, 'main-broken-gm-bot-vpc-ig');
@@ -50,12 +47,11 @@ export class VpcStack extends cdk.Stack {
         });
 
         // Create Private Subnet
-        const privateSubnet = new ec2.PrivateSubnet(this, 'main-broken-gm-bot-vpc-private-subnet', {
+        this.privateSubnet = new ec2.PrivateSubnet(this, 'main-broken-gm-bot-vpc-private-subnet', {
             vpcId: vpc.vpcId,
             availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: '10.0.4.0/22',
             mapPublicIpOnLaunch: false,
         });
-        this.privateSubnetId = stack.resolve(privateSubnet.subnetId)
     }
 }

@@ -6,18 +6,15 @@ import * as ecr from 'aws-cdk-lib/aws-ecr';
 
 interface EcsTaskStackProps extends cdk.StackProps {
     ecrRepoName: string;
-    vpcId: string;
-    subnetId: string;
+    vpc: ec2.IVpc;
+    subnet: ec2.ISubnet;
 }
 
 export class EcsStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: EcsTaskStackProps) {
         super(scope, id, props);
-
         
-        // Grab ECR Repo, VPC, and Subnet
-        const vpc = ec2.Vpc.fromLookup(this, 'main-broken-gm-bot-ecs-vpc', { vpcId: props.vpcId });
-        const subnet: ec2.ISubnet = ec2.Subnet.fromSubnetId(this, 'main-broken-gm-bot-ecs-vpc-private-subnet', props.subnetId);
+        // Grab ECR Repo
         const repository = ecr.Repository.fromRepositoryName(
             this,
             'main-broken-gm-bot-ecs-ecr-repo',
@@ -25,11 +22,13 @@ export class EcsStack extends cdk.Stack {
         );
 
         // Create ECS Cluster
-        const cluster = new ecs.Cluster(this, 'main-broken-gm-bot-ecs-cluster', { vpc });
+        const cluster = new ecs.Cluster(this, 'main-broken-gm-bot-ecs-cluster', {
+            vpc: props.vpc
+        });
         cluster.addCapacity('main-broken-gm-bot-ecs-scaling-group', {
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
             desiredCapacity: 1,
-            vpcSubnets: { subnets: [subnet] }
+            vpcSubnets: { subnets: [props.subnet] }
         });
 
         // Create ECS Task
