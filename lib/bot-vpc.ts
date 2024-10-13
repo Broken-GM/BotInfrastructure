@@ -4,6 +4,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 export class VpcStack extends cdk.Stack {
     public readonly privateSubnet: ec2.Subnet;
+    public readonly vpc: ec2.Vpc;
 
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
