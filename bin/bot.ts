@@ -10,6 +10,6 @@ const vpcStack = new VpcStack(app, 'main-broken-gm-bot-vpc-network');
 const ecrStack = new EcrStack(app, 'main-broken-gm-bot-ecr');
 const ecsStack = new EcsStack(app, 'main-broken-gm-bot-ecs', {
     ecrRepoName: ecrStack.ecrRepoName,
-    vpc: vpcStack.vpc,
-    subnet: vpcStack.privateSubnet
+    vpcId: vpcStack.vpcId,
+    subnetId: vpcStack.privateSubnetId
 });
