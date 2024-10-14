@@ -26,7 +26,7 @@ export class EcsStack extends cdk.Stack {
         // Create ECS Cluster
         const cluster = new ecs.Cluster(this, 'main-broken-gm-bot-ecs-cluster', {});
         cluster.addCapacity('main-broken-gm-bot-ecs-scaling-group', {
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.SMALL),
             desiredCapacity: 1,
         });
 
@@ -53,7 +53,7 @@ export class EcsStack extends cdk.Stack {
         const taskDefinition = new ecs.Ec2TaskDefinition(this, 'main-broken-gm-bot-ecs-task', { taskRole });
         const container = taskDefinition.addContainer('main-broken-gm-bot-ecs-task-container', {
             image: ecs.ContainerImage.fromEcrRepository(repository),
-            memoryLimitMiB: 900,
+            memoryLimitMiB: 1800,
             cpu: 1024,
             logging: new ecs.AwsLogDriver({ streamPrefix: 'main-broken-gm-bot-ecs-task-container' })
         });
