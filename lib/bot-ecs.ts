@@ -53,8 +53,8 @@ export class EcsStack extends cdk.Stack {
         const taskDefinition = new ecs.Ec2TaskDefinition(this, 'main-broken-gm-bot-ecs-task', { taskRole });
         const container = taskDefinition.addContainer('main-broken-gm-bot-ecs-task-container', {
             image: ecs.ContainerImage.fromEcrRepository(repository),
-            memoryLimitMiB: 512,
-            cpu: 256,
+            memoryLimitMiB: 900,
+            cpu: 1024,
             logging: new ecs.AwsLogDriver({ streamPrefix: 'main-broken-gm-bot-ecs-task-container' })
         });
 
